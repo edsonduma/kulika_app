@@ -1,0 +1,43 @@
+import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+class UtilService {
+  static Future<dynamic> getData(String myParam) async {
+    // print('MY_IP: ${dotenv.env['SERVER_IP']}');
+
+    final response = await http
+        .get(Uri.parse('http://${dotenv.env["SERVER_IP"]}:8000/api/$myParam'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return jsonDecode(response.body);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      print('response.statusCode: ${response.statusCode}');
+    }
+  }
+
+  static Future setData(String myParam, data) async {
+    final response = await http.post(
+      Uri.parse('http://${dotenv.env["SERVER_IP"]}:8000/api/$myParam'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: json.encode(data),
+    );
+
+    if (response.statusCode == 200) {
+      //   // If the server did return a 200 OK response,
+      //   // then parse the JSON.
+      return jsonDecode(response.body);
+    } else {
+      //   // If the server did not return a 200 OK response,
+      //   // then throw an exception.
+      print('response.statusCode: ${response.statusCode}');
+    }
+  }
+}
