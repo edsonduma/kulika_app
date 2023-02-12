@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:kulika/prods/prod_details.dart';
 import 'package:kulika/prods/prod_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:kulika/users/user_model.dart';
 
 Future<dynamic> getProds() async {
   final response = await http
@@ -23,7 +24,10 @@ Future<dynamic> getProds() async {
 }
 
 class ProdList extends StatefulWidget {
-  const ProdList({super.key});
+  final User userLogged;
+
+  // const ProdList({super.key});
+  const ProdList({Key? key, required this.userLogged}) : super(key: key);
 
   @override
   State<ProdList> createState() => _ProdListState();
@@ -415,19 +419,22 @@ class _ProdListState extends State<ProdList> {
                 ],
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProdCreate(),
-            ),
-          ).then((_) => getAllProds());
-        },
-        tooltip: "Adicionar Produto",
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      floatingActionButton: (widget.userLogged.tipo == 'super_admin' &&
+              widget.userLogged.tipo == 'admin_loja'
+          ? FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProdCreate(),
+                  ),
+                ).then((_) => getAllProds());
+              },
+              tooltip: "Adicionar Produto",
+              child: Icon(Icons.add),
+              backgroundColor: Theme.of(context).primaryColor,
+            )
+          : null),
     );
   }
 }

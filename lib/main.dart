@@ -25,19 +25,19 @@ Future main() async {
 //   }
 // }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.orange,
-      ),
-      // home: LoginUser(),
-      // home: ProdList(),
-      home: ProdList(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         primaryColor: Colors.orange,
+//       ),
+//       // home: LoginUser(),
+//       // home: ProdList(),
+//       home: ProdList(),
+//     );
+//   }
+// }

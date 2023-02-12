@@ -2,12 +2,12 @@ class User {
   User({
     required this.nome,
     this.tipo,
-    required this.senha,
+    this.senha,
   });
 
   final String nome;
   final String? tipo;
-  final String senha;
+  final String? senha;
 
   // 'kero': 'kero.jpg',
   static final tiposUser = {'super_admin': '', 'admin_loja': '', 'cliente': ''};

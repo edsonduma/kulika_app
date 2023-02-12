@@ -148,12 +148,12 @@ class _LoginUserState extends State<LoginUser> {
                       onPressed: () {
                         if (_userTextFieldController.text == "admin" &&
                             _pwdTextFieldController.text == "admin") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProdList(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ProdList(),
+                          //   ),
+                          // );
                         }
 
                         _userTextFieldController.text = '';

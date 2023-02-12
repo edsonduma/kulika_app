@@ -20,7 +20,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
+  // Key _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   bool checkboxValue = false;
 
   final TextEditingController _userTextFieldController =
@@ -126,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                                   }
                                 },
                               ),
-                              // SizedBox(height: 15.0),
+                              SizedBox(height: 15.0),
                               // Container(
                               //   margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                               //   alignment: Alignment.topRight,
@@ -178,24 +179,42 @@ class _LoginPageState extends State<LoginPage> {
                                     //         "admin") {
                                     //   _userTextFieldController.text = '';
                                     //   _pwdTextFieldController.text = '';
-                                    User user = User(
-                                      nome: _userTextFieldController.text
-                                          .toLowerCase(),
-                                      senha: _pwdTextFieldController.text,
-                                    );
 
-                                    var loginStatus =
-                                        await UserService.getData(user);
-                                    // print('status: ${loginStatus["data"]}');
+                                    if (_formKey.currentState!.validate()) {
+                                      User user = User(
+                                        nome: _userTextFieldController.text
+                                            .toLowerCase(),
+                                        senha: _pwdTextFieldController.text,
+                                      );
 
-                                    var userLogged =
-                                        loginStatus["data"]["nome"];
+                                      var loginStatus =
+                                          await UserService.getData(user);
+                                      // print('status: ${loginStatus["data"]}');
 
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProdList()),
-                                    );
+                                      try {
+                                        var logTeste =
+                                            loginStatus["data"]["nome"];
+                                        print(
+                                            'logTeste: $logTeste, ${loginStatus["data"]["tipo"]}');
+
+                                        User userLogged = User(
+                                          nome: loginStatus["data"]["nome"],
+                                          tipo: loginStatus["data"]["tipo"],
+                                        );
+
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ProdList(
+                                                  userLogged: userLogged)),
+                                        );
+                                      } catch (e) {
+                                        print('login falhou...');
+
+                                        _userTextFieldController.text = '';
+                                        _pwdTextFieldController.text = '';
+                                      }
+                                    }
                                   },
                                 ),
                               ),
