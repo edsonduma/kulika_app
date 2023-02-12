@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kulika/prods/prod_details.dart';
 import 'package:kulika/prods/prod_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<dynamic> getProds() async {
-  final response =
-      await http.get(Uri.parse('http://10.0.12.89:8000/api/produtos'));
+  final response = await http
+      .get(Uri.parse('http://${dotenv.env["SERVER_IP"]}:8000/api/produtos'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,

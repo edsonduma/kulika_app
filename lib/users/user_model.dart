@@ -1,12 +1,12 @@
 class User {
   User({
     required this.nome,
-    required this.tipo,
+    this.tipo,
     required this.senha,
   });
 
   final String nome;
-  final String tipo;
+  final String? tipo;
   final String senha;
 
   // 'kero': 'kero.jpg',

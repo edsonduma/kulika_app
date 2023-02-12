@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:kulika/common/theme_helper.dart';
 import 'package:kulika/common/util_service.dart';
 import 'package:kulika/prods/prod_list.dart';
+import 'package:kulika/users/user_model.dart';
+import 'package:kulika/users/user_service.dart';
 
 // import 'profile_page.dart';
 import 'registration_page.dart';
@@ -19,6 +21,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
+  bool checkboxValue = false;
 
   final TextEditingController _userTextFieldController =
       TextEditingController();
@@ -78,8 +81,52 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
                               ),
-                              SizedBox(height: 15.0),
-                              SizedBox(height: 15.0),
+                              // SizedBox(height: 10.0),
+                              FormField<bool>(
+                                builder: (state) {
+                                  return Column(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Checkbox(
+                                              value: checkboxValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  checkboxValue = value!;
+                                                  state.didChange(value);
+                                                });
+                                              }),
+                                          Text(
+                                            "Manter logado!",
+                                            style:
+                                                TextStyle(color: Colors.grey),
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          state.errorText ?? '',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color: Theme.of(context).errorColor,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                                validator: (_) {
+                                  if (_userTextFieldController.text == "" &&
+                                      _pwdTextFieldController.text == "") {
+                                    return 'É necessário preencher todos os campos!';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              // SizedBox(height: 15.0),
                               // Container(
                               //   margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
                               //   alignment: Alignment.topRight,
@@ -116,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                                           color: Colors.white),
                                     ),
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     //After successful login we will redirect to profile page. Let's create profile page now
                                     // Navigator.pushReplacement(
                                     //     context,
@@ -125,19 +172,30 @@ class _LoginPageState extends State<LoginPage> {
                                     //             ProfilePage()));
                                     // print('por desenvolver...');
 
-                                    if (_userTextFieldController.text ==
-                                            "admin" &&
-                                        _pwdTextFieldController.text ==
-                                            "admin") {
-                                      _userTextFieldController.text = '';
-                                      _pwdTextFieldController.text = '';
+                                    // if (_userTextFieldController.text ==
+                                    //         "admin" &&
+                                    //     _pwdTextFieldController.text ==
+                                    //         "admin") {
+                                    //   _userTextFieldController.text = '';
+                                    //   _pwdTextFieldController.text = '';
+                                    User user = User(
+                                      nome: _userTextFieldController.text
+                                          .toLowerCase(),
+                                      senha: _pwdTextFieldController.text,
+                                    );
 
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProdList()),
-                                      );
-                                    }
+                                    var loginStatus =
+                                        await UserService.getData(user);
+                                    // print('status: ${loginStatus["data"]}');
+
+                                    var userLogged =
+                                        loginStatus["data"]["nome"];
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProdList()),
+                                    );
                                   },
                                 ),
                               ),

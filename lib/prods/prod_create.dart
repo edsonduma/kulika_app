@@ -3,10 +3,11 @@ import 'package:kulika/prods/prod_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:boxicons/boxicons.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future addProds(prod) async {
   final response = await http.post(
-    Uri.parse('http://10.0.12.89:8000/api/produtos'),
+    Uri.parse('http://${dotenv.env["SERVER_IP"]}:8000/api/produtos'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

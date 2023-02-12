@@ -32,6 +32,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeHelper myTheme = ThemeHelper();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -92,11 +94,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           style: TextStyle(
                               fontSize: 60, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 30),
+                        Text(
+                          'Cadastre os seus dados',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        SizedBox(height: 15),
                         Container(
                           child: TextFormField(
                             controller: _nomeTextFieldController,
-                            decoration: ThemeHelper().textInputDecoration(
+                            decoration: myTheme.textInputDecoration(
                                 'Nome de Utilizador', 'Digite o seu nome'),
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -105,14 +111,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               return null;
                             },
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                          decoration: myTheme.inputBoxDecorationShaddow(),
                         ),
                         SizedBox(height: 20),
                         Container(
                           child: TextFormField(
                             controller: _senhaTextFieldController,
                             obscureText: true,
-                            decoration: ThemeHelper().textInputDecoration(
+                            decoration: myTheme.textInputDecoration(
                                 "Senha*", "Digite a sua senha"),
                             validator: (val) {
                               if (val!.isEmpty) {
@@ -121,15 +127,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               return null;
                             },
                           ),
-                          decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                          decoration: myTheme.inputBoxDecorationShaddow(),
                         ),
                         SizedBox(height: 20),
                         Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: myTheme.boxInputDecoration(),
                           child: DropdownButton(
                             dropdownColor: Colors.white,
                             icon: const Icon(Icons.arrow_drop_down),
                             iconSize: 28,
-                            hint: const Text("Seleccione Tipo de Utilizador"),
+                            hint: const Text("Seleccione Tipo de Utilizador*"),
                             disabledHint: const Text("Seleccione Tipo"),
                             underline: const SizedBox(),
                             isExpanded: true,
@@ -191,10 +199,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         SizedBox(height: 20.0),
                         Container(
-                          decoration:
-                              ThemeHelper().buttonBoxDecoration(context),
+                          decoration: myTheme.buttonBoxDecoration(context),
                           child: ElevatedButton(
-                            style: ThemeHelper().buttonStyle(),
+                            style: myTheme.buttonStyle(),
                             child: Padding(
                               padding:
                                   const EdgeInsets.fromLTRB(40, 10, 40, 10),
@@ -224,8 +231,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   senha: _senhaTextFieldController.text,
                                 );
 
+                                // var status = UserService.setData(user);
                                 UserService.setData(user);
 
+                                // if (status != null) {
+                                // }
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) => LoginPage()),
@@ -255,7 +265,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         //           showDialog(
                         //             context: context,
                         //             builder: (BuildContext context) {
-                        //               return ThemeHelper().alartDialog(
+                        //               return myTheme.alartDialog(
                         //                   "Google Plus",
                         //                   "You tap on GooglePlus social icon.",
                         //                   context);
@@ -287,7 +297,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         //           showDialog(
                         //             context: context,
                         //             builder: (BuildContext context) {
-                        //               return ThemeHelper().alartDialog(
+                        //               return myTheme.alartDialog(
                         //                   "Twitter",
                         //                   "You tap on Twitter social icon.",
                         //                   context);
@@ -310,7 +320,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         //           showDialog(
                         //             context: context,
                         //             builder: (BuildContext context) {
-                        //               return ThemeHelper().alartDialog(
+                        //               return myTheme.alartDialog(
                         //                   "Facebook",
                         //                   "You tap on Facebook social icon.",
                         //                   context);
