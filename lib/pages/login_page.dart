@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:kulika/common/theme_helper.dart';
-import 'package:kulika/common/util_service.dart';
 import 'package:kulika/prods/prod_list.dart';
 import 'package:kulika/users/user_model.dart';
 import 'package:kulika/users/user_service.dart';
@@ -187,6 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                                         senha: _pwdTextFieldController.text,
                                       );
 
+                                      var isLoggedIn = false;
+
                                       var loginStatus =
                                           await UserService.getData(user);
                                       // print('status: ${loginStatus["data"]}');
@@ -195,20 +195,34 @@ class _LoginPageState extends State<LoginPage> {
                                         var logTeste =
                                             loginStatus["data"]["nome"];
                                         print(
-                                            'logTeste: $logTeste, ${loginStatus["data"]["tipo"]}');
+                                            'logTeste: ${loginStatus["data"]}');
+                                        isLoggedIn = true;
+                                      } catch (e) {
+                                        isLoggedIn = false;
+                                      }
 
+                                      if (isLoggedIn) {
                                         User userLogged = User(
-                                          nome: loginStatus["data"]["nome"],
-                                          tipo: loginStatus["data"]["tipo"],
+                                          nome: '',
+                                          senha: '',
+                                          tipo: '',
                                         );
-
+                                        ;
+                                        try {
+                                          userLogged = User(
+                                            nome: loginStatus["data"]["nome"],
+                                            tipo: loginStatus["data"]["tipo"],
+                                          );
+                                        } catch (e) {
+                                          print('erro de conversao...');
+                                        }
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => ProdList(
                                                   userLogged: userLogged)),
                                         );
-                                      } catch (e) {
+                                      } else {
                                         print('login falhou...');
 
                                         _userTextFieldController.text = '';
