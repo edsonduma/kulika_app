@@ -13,8 +13,8 @@ Foi desenvolvido com Flutter, Laravel  e PostgreSQL.
 ## Passos para correr o projecto Flutter (app):
 
 Para arrancar o projecto numa nova maquina, é necessario
-criar e configurar devidamente o ip da maquina no .env file 
-igual ao .env.example
+criar .env file e configurar devidamente o IP da maquina no ficheiro conforme o exemplo .env.example
+- OBS:(não poderá ser usado "localhost" ou "127.0.0.1" porque queremos aceder ao servidor externo do emulador)
 
 ## Passos para correr o servidor Backend
 
@@ -23,6 +23,10 @@ php artisan serve --host 0.0.0.0
 
 
 ## Restore da Base de Dados
-- Caso haja problemas no restore, usar os comando abaixo
+- o backup da base de dados está na pasta "BACKups database" do BACKEND kulipa-api
 
-sudo ./psql -U postgres -d baratuxo_db < ~/Documents/baratuxo_db_12122023_1954.sql
+criar a "baratuxo_db" no PostgreSQL
+
+- Caso haja problemas no restore, usar o comando abaixo:
+
+sudo psql -U postgres -d baratuxo_db < baratuxo_db_12122023_1954.sql
