@@ -20,3 +20,9 @@ igual ao .env.example
 
 - Executar o comando abaixo:
 php artisan serve --host 0.0.0.0
+
+
+## Restore da Base de Dados
+- Caso haja problemas no restore, usar os comando abaixo
+
+sudo ./psql -U postgres -d baratuxo_db < ~/Documents/baratuxo_db_12122023_1954.sql
